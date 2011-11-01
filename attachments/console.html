@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Couch Console</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" media="screen"  href="style.css" />
+    <script src="json2.js"></script>
+    <script src="jquery.js"></script>
+  </head>
+  <body>
+    
+    <script>
+      function toJSON(obj) {
+        return obj !== null ? JSON.stringify(obj, null, 2) : null;
+      }
+
+      $(document).ready(function() {
+        
+        $("button#contact").click ( function () {
+          $.get( "/", 
+            function(data) {
+              $("code").html(toJSON(data));
+            },
+            "json"
+          ).error(
+            function(xhr) {
+              $("code").html(toJSON(JSON.parse(xhr.responseText)));
+            }
+          );
+        });
+
+        $("#request").submit(function() {
+          var method = $("#method").val();
+          var url = $("#url").val();
+          $.ajax({
+            url: url,
+            type: method,
+            success: function(data) {
+              $("code").html(toJSON(data));
+            },
+            error: function(xhr) {
+              $("code").html(toJSON(JSON.parse(xhr.responseText)));
+            },
+            dataType: "json"
+          });
+          return false; // so page doesnt refresh
+        });
+        
+      });
+
+    </script>
+    
+    <div id="content">
+      <h1>Couch Console</h1>
+
+      <h3>Input:</h3>
+      <form id="request" action="#">
+        <select id="method" name="method">
+          <option value="get">GET</option>
+          <option value="put">PUT</option>
+          <option value="post">POST</option>
+        </select>
+        <input id="url" name="url" type="text" placeholder="relative url" autofocus />
+        <textarea placeholder="data to send in a POST request"></textarea>
+        <input type="submit" />
+      </form>
+
+      <h3>Result:</h3>
+      <pre><code>
+        
+      </code></pre>
+      <button id="contact">Sanity Check</button>
+    </div>
+    
+  </body>
+</html>
