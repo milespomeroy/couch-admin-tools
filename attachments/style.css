@@ -45,3 +45,6 @@ pre code {
 	display: block;
 	font-family: Menlo, Monaco, monospace;
 }
+.error {
+  background: #fdd;
+}

@@ -16,32 +16,25 @@
 
       $(document).ready(function() {
         
-        $("button#contact").click ( function () {
-          $.get( "/", 
-            function(data) {
-              $("code").html(toJSON(data));
-            },
-            "json"
-          ).error(
-            function(xhr) {
-              $("code").html(toJSON(JSON.parse(xhr.responseText)));
-            }
-          );
-        });
-
         $("#request").submit(function() {
           var method = $("#method").val();
           var url = $("#url").val();
+          var data = $("textarea").val();
           $.ajax({
             url: url,
             type: method,
             success: function(data) {
               $("code").html(toJSON(data));
+              $("pre").removeClass("error");
             },
             error: function(xhr) {
               $("code").html(toJSON(JSON.parse(xhr.responseText)));
+              $("pre").addClass("error");
             },
-            dataType: "json"
+            dataType: "json",
+            processData: false,
+            data: data,
+            contentType: "application/json"
           });
           return false; // so page doesnt refresh
         });
@@ -53,7 +46,7 @@
     <div id="content">
       <h1>Couch Console</h1>
 
-      <h3>Input:</h3>
+      <h3>Request:</h3>
       <form id="request" action="#">
         <select id="method" name="method">
           <option value="get">GET</option>
@@ -61,15 +54,12 @@
           <option value="post">POST</option>
         </select>
         <input id="url" name="url" type="text" placeholder="relative url" autofocus />
-        <textarea placeholder="data to send in a POST request"></textarea>
+        <textarea placeholder="json data"></textarea>
         <input type="submit" />
       </form>
 
       <h3>Result:</h3>
-      <pre><code>
-        
-      </code></pre>
-      <button id="contact">Sanity Check</button>
+      <pre><code></code></pre>
     </div>
     
   </body>
