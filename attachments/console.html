@@ -6,43 +6,29 @@
     <link rel="stylesheet" type="text/css" media="screen"  href="style.css" />
     <script src="json2.js"></script>
     <script src="jquery.js"></script>
+    <script src="jquery.couch.js"></script>
+    <script src="jquery.admin.js"></script>
   </head>
   <body>
     
-    <script>
-      function toJSON(obj) {
-        return obj !== null ? JSON.stringify(obj, null, 2) : null;
-      }
+    <header>
+      <span class="loggedin" style="display: none">Welcome 
+        <span class="usersname"></span>.
+        <a href="#" class="logout">Logout</a>
+      </span>
 
-      $(document).ready(function() {
-        
-        $("#request").submit(function() {
-          var method = $("#method").val();
-          var url = $("#url").val();
-          var data = $("textarea").val();
-          $.ajax({
-            url: url,
-            type: method,
-            success: function(data) {
-              $("code").html(toJSON(data));
-              $("pre").removeClass("error");
-            },
-            error: function(xhr) {
-              $("code").html(toJSON(JSON.parse(xhr.responseText)));
-              $("pre").addClass("error");
-            },
-            dataType: "json",
-            processData: false,
-            data: data,
-            contentType: "application/json"
-          });
-          return false; // so page doesnt refresh
-        });
-        
-      });
+      <span class="loggedout" style="display: none">
+        <form id="login" action="#">
+          Sign In: 
+          <input id="username" name="username" placeholder="username" /> 
+          <input id="password" name="password" type="password" placeholder="password" /> 
+          <input type="submit" style="position: absolute; left: -9999px" />
+        </form>
+      </span>
 
-    </script>
-    
+      <span class="adminparty" style="display: none">Admin Party!</span>
+    </header>
+
     <div id="content">
       <h1>Couch Console</h1>
 

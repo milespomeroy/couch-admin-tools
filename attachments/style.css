@@ -2,6 +2,9 @@ body {
   font-family: "Gill Sans", sans-serif;
   text-align: center;
 }
+header {
+  text-align: right;
+}
 h3 {
   margin-bottom: 0;
 }
@@ -47,4 +50,8 @@ pre code {
 }
 .error {
   background: #fdd;
+}
+input#username, input#password {
+  margin-top: 0;
+  margin-bottom: 0;
 }
