@@ -8,19 +8,17 @@ A collection of tools for administering CouchDB from within CouchDB.
 Installation
 ------------
 
-1. Requires [CouchApp](http://couchapp.org/page/couchapp-python) (python) 
-
-        sudo pip install couchapp
-
-1. Create new database in your CouchDB instance (make sure it doesn't exist first)
+1. Requires [node.couchapp.js](https://github.com/mikeal/node.couchapp.js) to be
+   installed globally for installing code to the database.
+1. Create new database in your CouchDB instance (make sure it doesn't exist first).
 
         PUT /admin
 
-1. Download the latest code
+1. Download the latest code.
 
         git clone git://github.com/milespomeroy/couch-admin-tools.git
 
-1. Use CouchApp to install the code into the new database
+1. Use couchapp to install the code into the new database.
 
         cd couch-admin-tools
         couchapp push app.js http://user:password@localhost:5984/admin
